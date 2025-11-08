@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, Lock, FileText, Camera, Check, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
+import { BackButton } from './ui/breadcrumb-nav';
+
+interface ChatVerificationFlowProps {
+  onBack?: () => void;
+}
 
 type VerificationStep = 
   | 'initial'
@@ -52,10 +57,18 @@ const mockAuras: AuraChat[] = [
   }
 ];
 
-export function ChatVerificationFlow() {
+export function ChatVerificationFlow({ onBack }: ChatVerificationFlowProps) {
   const [currentStep, setCurrentStep] = useState<VerificationStep>('initial');
   const [progress, setProgress] = useState(0);
   const [documentUploaded, setDocumentUploaded] = useState(false);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      window.location.hash = '';
+    }
+  };
 
   const handleStartVerification = () => {
     setCurrentStep('document');
@@ -160,7 +173,7 @@ export function ChatVerificationFlow() {
                   Iniciar verificación
                 </Button>
                 <Button
-                  onClick={() => window.history.back()}
+                  onClick={handleBack}
                   variant="ghost"
                   className="w-full mt-3 text-white/60 hover:text-white hover:bg-white/5"
                 >
@@ -423,13 +436,8 @@ export function ChatVerificationFlow() {
             className="min-h-screen"
           >
             <div className="max-w-md mx-auto">
-              <button
-                onClick={() => window.history.back()}
-                className="flex items-center gap-2 text-white/70 hover:text-white mb-6"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Conversaciones
-              </button>
+              <BackButton onClick={handleBack} label="Conversaciones" />
+
 
               <h2 className="text-white text-xl mb-4">Auras disponibles para chat:</h2>
 
@@ -463,7 +471,7 @@ export function ChatVerificationFlow() {
               </div>
 
               <Button
-                onClick={() => window.history.back()}
+                onClick={handleBack}
                 variant="outline"
                 className="w-full border-white/30 text-white hover:bg-white/10"
               >

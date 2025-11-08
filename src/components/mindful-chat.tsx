@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Settings, Check, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Sparkles, Heart, Zap, Shield, Moon, Sun, Send, Settings, Check, Clock, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
+import { Input } from './ui/input';
 import { MindoAvatar } from './mindo-avatar';
+import { BackButton } from './ui/breadcrumb-nav';
+
+interface MindfulChatProps {
+  onBack?: () => void;
+}
 
 interface Message {
   id: string;
@@ -26,7 +32,7 @@ const TIME_LIMITS = [
 // Development mode configuration
 const DEV_MODE_MULTIPLIER = 60; // 1 minute = 1 second
 
-export function MindfulChat() {
+export function MindfulChat({ onBack }: MindfulChatProps) {
   const [currentView, setCurrentView] = useState<ChatView>('chat');
   const [messages, setMessages] = useState<Message[]>([
     { id: '1', text: 'Hola! 👋', sender: 'them', timestamp: '10:23 AM' },
@@ -40,6 +46,14 @@ export function MindfulChat() {
   const [hasExtended, setHasExtended] = useState(false);
   const [cooldownRemaining, setCooldownRemaining] = useState(7020); // 1h 57min in seconds
   const [devMode, setDevMode] = useState(false);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      window.location.hash = '';
+    }
+  };
 
   // Timer effect with dev mode support
   useEffect(() => {
@@ -158,12 +172,7 @@ export function MindfulChat() {
             <div className="bg-[#1A1F3A] border-b border-[#2D3454]">
               <div className="max-w-md mx-auto p-4">
                 <div className="flex items-center gap-3 mb-2">
-                  <button
-                    onClick={() => window.history.back()}
-                    className="text-white/70 hover:text-white"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                  </button>
+                  <BackButton onClick={handleBack} label="" />
                   <div className="w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center text-lg">
                     💙
                   </div>
@@ -588,7 +597,7 @@ export function MindfulChat() {
                     Ir a Mi Jardín
                   </Button>
                   <Button
-                    onClick={() => window.history.back()}
+                    onClick={handleBack}
                     variant="outline"
                     className="w-full h-10 bg-transparent border border-white/20 text-white hover:bg-white/10"
                   >
@@ -619,12 +628,9 @@ export function MindfulChat() {
             <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E27] to-[#1A1F3A] opacity-98" />
             
             <Card className="relative z-10 bg-[#1A1F3A]/95 backdrop-blur-xl border-white/20 p-6 max-w-md w-full text-center">
-              <button
-                onClick={() => window.history.back()}
-                className="absolute top-4 left-4 text-white/70 hover:text-white"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
+              <div className="absolute top-4 left-4">
+                <BackButton onClick={handleBack} label="" />
+              </div>
 
               <div className="mt-2">
                 <div className="w-8 h-8 rounded-full bg-blue-400 mx-auto mb-4 flex items-center justify-center text-lg">

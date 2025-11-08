@@ -4,8 +4,13 @@ import { ArrowLeft, Lock, Book, Target, Settings as SettingsIcon, Clock, AlertCi
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { MindoAvatar } from './mindo-avatar';
+import { BreadcrumbNav, BreadcrumbItem, BackButton } from './ui/breadcrumb-nav';
 
 type View = 'profile' | 'journal' | 'professionalHelp' | 'organizationDetail';
+
+interface MiPerfilProps {
+  onBack?: () => void;
+}
 
 interface DesahogoPost {
   id: string;
@@ -128,11 +133,20 @@ const organizations: Organization[] = [
   }
 ];
 
-export function MiPerfil() {
+export function MiPerfil({ onBack }: MiPerfilProps = {}) {
   const [currentView, setCurrentView] = useState<View>('profile');
   const [filter, setFilter] = useState<'all' | 'public' | 'private'>('all');
   const [showAlert, setShowAlert] = useState(true);
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      // Fallback: navigate using hash
+      window.location.hash = '';
+    }
+  };
 
   const filteredPosts = mockPosts.filter(post => {
     if (filter === 'all') return true;
@@ -159,16 +173,13 @@ export function MiPerfil() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              className="page-transition"
             >
-              <button
-                onClick={() => window.history.back()}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Volver
-              </button>
+              <BackButton onClick={handleBack} />
 
-              <h1 className="text-gray-900 text-2xl mb-6">Mi Perfil</h1>
+              <div className="mb-6">
+                <h1 className="text-gray-900 text-2xl">Mi Perfil</h1>
+              </div>
 
               {/* Profile Card */}
               <Card className="bg-white/80 backdrop-blur-sm border-purple-200 p-6 mb-4">
@@ -255,13 +266,23 @@ export function MiPerfil() {
               <div className="flex items-center justify-between mb-6">
                 <button
                   onClick={() => setCurrentView('profile')}
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label="Volver a Mi Perfil"
                 >
                   <ArrowLeft className="w-5 h-5" />
-                  Mi Diario Privado
+                  Mi Perfil
                 </button>
-                <Lock className="w-5 h-5 text-purple-500" />
+                <Lock className="w-5 h-5 text-purple-500" aria-label="Contenido privado" />
               </div>
+
+              {/* Breadcrumb Navigation */}
+              <BreadcrumbNav 
+                showHome={false}
+                items={[
+                  { label: 'Perfil', onClick: () => setCurrentView('profile') },
+                  { label: 'Mi Diario' }
+                ]}
+              />
 
               <div className="mb-6">
                 <h2 className="text-gray-900 text-xl mb-4">✍️ Tus desahogos ({mockPosts.length})</h2>
@@ -425,11 +446,22 @@ export function MiPerfil() {
             >
               <button
                 onClick={() => setCurrentView('journal')}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+                aria-label="Volver a Mi Diario"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Apoyo Profesional
+                Volver
               </button>
+
+              {/* Breadcrumb Navigation */}
+              <BreadcrumbNav 
+                showHome={false}
+                items={[
+                  { label: 'Perfil', onClick: () => setCurrentView('profile') },
+                  { label: 'Mi Diario', onClick: () => setCurrentView('journal') },
+                  { label: 'Apoyo Profesional' }
+                ]}
+              />
 
               <div className="text-center mb-6">
                 <div className="text-5xl mb-4">🤝</div>
@@ -530,11 +562,23 @@ export function MiPerfil() {
             >
               <button
                 onClick={() => setCurrentView('professionalHelp')}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+                aria-label="Volver a lista de organizaciones"
               >
                 <ArrowLeft className="w-5 h-5" />
-                {selectedOrg.name}
+                Volver
               </button>
+
+              {/* Breadcrumb Navigation */}
+              <BreadcrumbNav 
+                showHome={false}
+                items={[
+                  { label: 'Perfil', onClick: () => setCurrentView('profile') },
+                  { label: 'Mi Diario', onClick: () => setCurrentView('journal') },
+                  { label: 'Apoyo', onClick: () => setCurrentView('professionalHelp') },
+                  { label: selectedOrg?.name || 'Organización' }
+                ]}
+              />
 
               <Card className="bg-white/90 border-green-400 p-6 mb-6">
                 <div className="text-center mb-4">

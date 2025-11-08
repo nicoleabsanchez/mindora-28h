@@ -1,0 +1,343 @@
+/* Nielsen Heuristics Implementation - Custom CSS Improvements */
+
+/* Smooth scrolling without page reload (Heuristic #3: User control and freedom) */
+html {
+  scroll-behavior: smooth;
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
+}
+
+body {
+  overscroll-behavior-y: contain; /* Disable pull-to-refresh on mobile */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Smooth transitions for all interactive elements (Heuristic #8: Aesthetic & minimalist design) */
+button, a, input, textarea, select {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus visible for accessibility (Heuristic #10: Help and documentation) */
+*:focus-visible {
+  outline: 2px solid #8B5CF6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Improve touch targets (Heuristic #5: Error prevention) */
+button:not(.icon-only), a:not(.icon-only) {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Loading states (Heuristic #1: Visibility of system status) */
+@keyframes pulse-custom {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth page transitions without reload */
+.page-transition {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Breadcrumb styles (Heuristic #1: Visibility of system status) */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.breadcrumb button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.breadcrumb button:hover {
+  color: #8B5CF6;
+  background-color: rgba(139, 92, 246, 0.1);
+}
+
+.breadcrumb span.separator {
+  margin: 0 0.5rem;
+  color: #9ca3af;
+}
+
+.breadcrumb span.current {
+  color: #111827;
+  font-weight: 500;
+}
+
+/* Custom scrollbar (aesthetic, Heuristic #8) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B5CF6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7C3AED;
+}
+
+/* Confirmation toast (Heuristic #1: Visibility of system status) */
+.toast-notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid #8B5CF6;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Error message styles (Heuristic #9: Help users recognize, diagnose, recover from errors) */
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message::before {
+  content: "⚠️";
+}
+
+/* Success message styles (Heuristic #1: Visibility of system status) */
+.success-message {
+  color: #16a34a;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.success-message::before {
+  content: "✓";
+}
+
+/* Tooltip styles (Heuristic #10: Help and documentation) */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* Skeleton loading (Heuristic #1: Visibility of system status) */
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 0.375rem;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Hover effects for cards (Heuristic #6: Recognition rather than recall) */
+.interactive-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.interactive-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Active state for buttons (Heuristic #1: Visibility of system status) */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Disabled state (Heuristic #1: Visibility of system status) */
+button:disabled, input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form validation styles (Heuristic #5: Error prevention) */
+input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: #dc2626;
+}
+
+input:valid:not(:focus):not(:placeholder-shown) {
+  border-color: #16a34a;
+}
+
+/* Prevent text selection on buttons (UX improvement) */
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Responsive touch-friendly spacing on mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Smooth accordion animations (Heuristic #8: Aesthetic & minimalist design) */
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Progress indicators (Heuristic #1: Visibility of system status) */
+.progress-bar {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #8B5CF6;
+  width: var(--progress, 0%);
+  transition: width 0.3s ease;
+}
+
+/* Back button consistent style (Heuristic #4: Consistency and standards) */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  color: #8B5CF6;
+  background-color: rgba(139, 92, 246, 0.1);
+}
+
+.back-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Confirmation dialog overlay (Heuristic #5: Error prevention) */
+.confirmation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.confirmation-dialog {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
