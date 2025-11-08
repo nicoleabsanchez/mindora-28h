@@ -289,7 +289,12 @@ export function JardinReal() {
 
           {/* Botón agregar hobby */}
           <Card className="bg-white/80 backdrop-blur-sm p-6 border-2 border-dashed border-gray-300 hover:border-green-400 transition-colors cursor-pointer">
-            <button className="w-full flex flex-col items-center gap-2 text-gray-600 hover:text-green-600">
+            <button 
+              className="w-full flex flex-col items-center gap-2 text-gray-600 hover:text-green-600"
+              onClick={() => {
+                alert('Próximamente podrás agregar tus propios hábitos personalizados. Por ahora, los ejemplos demuestran cómo funcionaría. 🌱');
+              }}
+            >
               <Plus className="w-8 h-8" />
               <p className="font-semibold">Agregar Nuevo Hábito</p>
             </button>
