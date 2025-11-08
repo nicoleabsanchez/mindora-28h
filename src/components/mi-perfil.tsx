@@ -237,7 +237,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                 <Card className="bg-white/80 backdrop-blur-sm border-blue-200 p-5 hover:bg-white/90 transition-all cursor-pointer">
                   <div className="flex items-center gap-3">
                     <Target className="w-6 h-6 text-blue-500" />
-                    <span className="text-gray-900">🎯 Mis Objetivos</span>
+                    <span className="text-gray-900">Mis Objetivos</span>
                   </div>
                 </Card>
               </button>
@@ -250,7 +250,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                 <Card className="bg-white/80 backdrop-blur-sm border-gray-200 p-5 hover:bg-white/90 transition-all cursor-pointer">
                   <div className="flex items-center gap-3">
                     <SettingsIcon className="w-6 h-6 text-gray-500" />
-                    <span className="text-gray-900">⚙️ Configuración</span>
+                    <span className="text-gray-900">Configuración</span>
                   </div>
                 </Card>
               </button>
