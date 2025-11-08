@@ -25,10 +25,16 @@ export default function App() {
         setCurrentSection('mindfulChat');
       } else if (window.location.hash === '#perfil') {
         setCurrentSection('perfil');
+      } else if (window.location.hash === '') {
+        // When clearing hash, go back to jardin with navigation
+        setCurrentSection('jardin');
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
+    // Check initial hash on mount
+    handleHashChange();
+    
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 

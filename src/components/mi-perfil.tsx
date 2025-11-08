@@ -143,8 +143,10 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
     if (onBack) {
       onBack();
     } else {
-      // Fallback: navigate using hash
+      // Fallback: clear hash to trigger navigation to jardin
       window.location.hash = '';
+      // Force state change if needed
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
     }
   };
 
