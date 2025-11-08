@@ -14,6 +14,9 @@ import {
   getPlantLevel,
   getPlantStage
 } from './plant-system';
+import { GardenBackground } from './svg/GardenBackground';
+import { CabinBackground } from './svg/CabinBackground';
+import { TerraceBackground } from './svg/TerraceBackground';
 
 interface Hobby {
   id: string;
@@ -118,60 +121,11 @@ export function JardinReal() {
   const renderScenarioBackground = () => {
     switch (scenario) {
       case 'jardin':
-        return (
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-200 via-green-100 to-green-200">
-            {/* Sol */}
-            <div className="absolute top-8 right-8 w-20 h-20 bg-yellow-300 rounded-full shadow-lg">
-              <div className="absolute inset-2 bg-yellow-200 rounded-full animate-pulse" />
-            </div>
-            {/* Nubes */}
-            <div className="absolute top-12 left-12 w-32 h-12 bg-white/60 rounded-full blur-sm" />
-            <div className="absolute top-20 right-32 w-40 h-14 bg-white/50 rounded-full blur-sm" />
-            {/* Pasto */}
-            <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-green-600 to-green-400" />
-          </div>
-        );
+        return <GardenBackground />;
       case 'cabana':
-        return (
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-900 via-amber-700 to-orange-800">
-            {/* Paredes de madera */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute inset-0" style={{
-                backgroundImage: 'repeating-linear-gradient(90deg, #4a2511 0px, #4a2511 100px, #5a3520 100px, #5a3520 200px)'
-              }} />
-            </div>
-            {/* Ventana */}
-            <div className="absolute top-12 right-12 w-48 h-36 bg-sky-300 rounded-lg border-4 border-amber-950">
-              <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
-                <div className="bg-sky-200/50" />
-                <div className="bg-sky-200/50" />
-                <div className="bg-sky-200/50" />
-                <div className="bg-sky-200/50" />
-              </div>
-            </div>
-            {/* Piso */}
-            <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-amber-950 to-amber-800" />
-          </div>
-        );
+        return <CabinBackground />;
       case 'terraza':
-        return (
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-400 via-sky-300 to-gray-500">
-            {/* Ciudad de fondo */}
-            <div className="absolute bottom-24 inset-x-0 flex justify-around items-end px-12">
-              <div className="w-16 h-32 bg-gray-700 opacity-40" />
-              <div className="w-20 h-40 bg-gray-600 opacity-40" />
-              <div className="w-12 h-24 bg-gray-700 opacity-40" />
-              <div className="w-24 h-48 bg-gray-600 opacity-40" />
-              <div className="w-16 h-36 bg-gray-700 opacity-40" />
-            </div>
-            {/* Barandilla */}
-            <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-gray-800 to-gray-700 border-t-4 border-gray-900" />
-            {/* Piso de terraza */}
-            <div className="absolute bottom-16 inset-x-0 h-12 bg-gray-400" style={{
-              backgroundImage: 'repeating-linear-gradient(90deg, #9ca3af 0px, #9ca3af 40px, #6b7280 40px, #6b7280 80px)'
-            }} />
-          </div>
-        );
+        return <TerraceBackground />;
     }
   };
 

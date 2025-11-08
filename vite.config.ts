@@ -4,6 +4,7 @@
   import path from 'path';
 
   export default defineConfig({
+    base: '/mindora-28h/', // This should match your GitHub repo name
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -51,7 +52,7 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      outDir: 'dist', // Changed to 'dist' for GitHub Pages
     },
     server: {
       port: 3000,

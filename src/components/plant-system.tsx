@@ -1,4 +1,6 @@
 import { motion } from 'motion/react';
+import { CactusSVG, FlowerSVG, RoseSVG, CherryTreeSVG, SunflowerSVG } from './svg/PlantSVGs';
+import { ClayPot, CeramicPot, BasketPlanter, GardenGroundPlot } from './svg/PlanterSVGs';
 
 export type PlantLevel = 'principiante' | 'intermedio' | 'pro';
 export type PlantStage = 'semilla' | 'brote' | 'joven' | 'desarrollada' | 'madura' | 'florecida';
@@ -80,6 +82,31 @@ export function getPlantSize(stage: PlantStage, level: PlantLevel): number {
   return baseSizes[level] * stageMultipliers[stage];
 }
 
+// Map plant names to their SVG components
+function getPlantSVG(plant: Plant) {
+  const plantName = plant.name.toLowerCase();
+  const plantType = plant.type.toLowerCase();
+  
+  if (plantName.includes('cactus') || plantName.includes('suculenta')) {
+    return <CactusSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+  }
+  if (plantName.includes('margarita') || plantName.includes('albahaca') || plantType.includes('hierba')) {
+    return <FlowerSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+  }
+  if (plantName.includes('rosa') || plantType.includes('arbusto')) {
+    return <RoseSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+  }
+  if (plantName.includes('cerezo') || plantName.includes('manzano') || plantName.includes('roble') || plantName.includes('pino') || plantName.includes('limonero') || plantType.includes('árbol')) {
+    return <CherryTreeSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+  }
+  if (plantName.includes('girasol') || plantName.includes('sunflower')) {
+    return <SunflowerSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+  }
+  
+  // Default to flower for other types
+  return <FlowerSVG stage={plant.stage} size={getPlantSize(plant.stage, plant.level)} />;
+}
+
 // Componente de planta animada
 interface AnimatedPlantProps {
   plant: Plant;
@@ -97,46 +124,53 @@ export function AnimatedPlant({ plant, onClick }: AnimatedPlantProps) {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="relative cursor-pointer"
+      className="relative cursor-pointer flex items-center justify-center"
       style={{
-        width: `${size}px`,
-        height: `${size}px`,
+        width: `${size + 40}px`,
+        height: `${size + 40}px`,
       }}
     >
-      {/* Planta */}
-      <motion.div
-        className="text-center select-none"
-        animate={{
-          y: [0, -5, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }}
-        style={{ fontSize: `${size * 0.8}px` }}
-      >
-        {plant.icon}
-      </motion.div>
+      {/* SVG Plant */}
+      <div className="relative z-10">
+        {getPlantSVG(plant)}
+      </div>
 
       {/* Progress ring */}
-      <motion.div
-        className="absolute inset-0 rounded-full border-4"
-        style={{
-          borderColor: progress >= 100 ? '#22c55e' : '#e5e7eb',
-          borderTopColor: '#22c55e',
-          transform: 'rotate(-90deg)',
-        }}
-        animate={{
-          rotate: [-90, -90 + (progress / 100) * 360],
-        }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-      />
+      <svg 
+        className="absolute inset-0" 
+        width="100%" 
+        height="100%" 
+        viewBox="0 0 100 100"
+        style={{ transform: 'rotate(-90deg)' }}
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          fill="none"
+          stroke="#e5e7eb"
+          strokeWidth="3"
+        />
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="45"
+          fill="none"
+          stroke={progress >= 100 ? '#22c55e' : '#86EFAC'}
+          strokeWidth="3"
+          strokeDasharray={`${2 * Math.PI * 45}`}
+          initial={{ strokeDashoffset: 2 * Math.PI * 45 }}
+          animate={{ 
+            strokeDashoffset: 2 * Math.PI * 45 * (1 - progress / 100)
+          }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        />
+      </svg>
 
       {/* Brillo de completado */}
       {plant.stage === 'florecida' && (
         <motion.div
-          className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30"
+          className="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-30 pointer-events-none"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -160,25 +194,41 @@ interface PlantContainerProps {
 }
 
 export function PlantContainer({ plant, scenario, onClick }: PlantContainerProps) {
-  const containerStyles = {
-    jardin: 'bg-gradient-to-b from-amber-800 to-amber-900',
-    cabana: 'bg-gradient-to-b from-red-700 to-red-900',
-    terraza: 'bg-gradient-to-b from-gray-600 to-gray-800'
+  // Choose planter type based on plant level and scenario
+  const getPlanterComponent = () => {
+    if (scenario === 'jardin' && plant.level === 'principiante') {
+      return <GardenGroundPlot size={100} />;
+    }
+    if (plant.level === 'pro') {
+      return <ClayPot size={90} scenario={scenario} />;
+    }
+    if (plant.level === 'intermedio') {
+      return <CeramicPot size={85} scenario={scenario} />;
+    }
+    return <BasketPlanter size={80} scenario={scenario} />;
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <AnimatedPlant plant={plant} onClick={onClick} />
+    <div className="flex flex-col items-center gap-1 relative">
+      {/* Plant above the pot */}
+      <div className="relative z-10 mb-[-20px]">
+        <AnimatedPlant plant={plant} onClick={onClick} />
+      </div>
       
-      {/* Maceta */}
-      <div className={`w-16 h-12 rounded-b-lg ${containerStyles[scenario]} shadow-lg relative`}>
-        <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-white/20 to-transparent" />
+      {/* Planter/Container */}
+      <div className="relative z-0">
+        {getPlanterComponent()}
       </div>
 
-      {/* Nombre */}
-      <p className="text-xs text-gray-700 font-medium text-center">
-        {plant.name}
-      </p>
+      {/* Nombre y info */}
+      <div className="text-center mt-2">
+        <p className="text-sm font-medium text-gray-800 drop-shadow-sm">
+          {plant.name}
+        </p>
+        <p className="text-xs text-gray-600">
+          {plant.stage === 'florecida' ? '🌟 Florecida' : `${plant.daysGrowing}/${plant.totalDays} días`}
+        </p>
+      </div>
     </div>
   );
 }
