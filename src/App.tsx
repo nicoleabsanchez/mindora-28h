@@ -37,7 +37,7 @@ export default function App() {
   }
 
   if (currentSection === 'chat') {
-    return <ChatVerificationFlow />;
+    return <ChatVerificationFlow onBack={() => setCurrentSection('aura')} />;
   }
 
   if (currentSection === 'trust') {
@@ -45,11 +45,11 @@ export default function App() {
   }
 
   if (currentSection === 'mindfulChat') {
-    return <MindfulChat />;
+    return <MindfulChat onBack={() => setCurrentSection('aura')} />;
   }
 
   if (currentSection === 'perfil') {
-    return <MiPerfil />;
+    return <MiPerfil onBack={() => setCurrentSection('jardin')} />;
   }
 
   return (
