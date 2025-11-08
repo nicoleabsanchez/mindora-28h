@@ -55,8 +55,8 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
               <Heart className="w-5 h-5 text-blue-700" />
             </div>
             <div>
-              <h3 className="text-purple-900 mb-1">Desahogo y Presencia</h3>
-              <p className="text-purple-700">Comparte lo que sientes y recibe validación humana sin perfiles ni toxicidad</p>
+              <h3 className="text-purple-900 mb-1">Conexión Genuina</h3>
+              <p className="text-purple-700">Expresa lo que sientes y conecta con otros de forma auténtica, sin perfiles ni toxicidad</p>
             </div>
           </div>
 
@@ -65,7 +65,7 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
               <Sparkles className="w-5 h-5 text-purple-700" />
             </div>
             <div>
-              <h3 className="text-purple-900 mb-1">Auras y Conexión Silenciosa</h3>
+              <h3 className="text-purple-900 mb-1">Auras y Conexión Relajante</h3>
               <p className="text-purple-700">Compañía sin palabras. Siente la presencia de otros sin presión social</p>
             </div>
           </div>
@@ -75,7 +75,7 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
               <Sprout className="w-5 h-5 text-green-700" />
             </div>
             <div>
-              <h3 className="text-purple-900 mb-1">Vida Real</h3>
+              <h3 className="text-purple-900 mb-1">Pasiones Offline</h3>
               <p className="text-purple-700">Redescubre quién eres fuera de las pantallas y cultiva tus hobbies</p>
             </div>
           </div>
