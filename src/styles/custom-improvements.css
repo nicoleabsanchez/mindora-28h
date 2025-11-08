@@ -249,13 +249,102 @@ button {
 
 /* Responsive touch-friendly spacing on mobile */
 @media (max-width: 768px) {
+  /* Touch targets más grandes en móvil */
   button, a {
     min-height: 48px;
     min-width: 48px;
   }
   
+  /* Previene zoom en iOS */
   input, textarea, select {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
+  }
+  
+  /* Padding reducido en móvil */
+  body {
+    padding: 0;
+  }
+  
+  /* Container más estrecho */
+  .max-w-2xl, .max-w-3xl, .max-w-4xl, .max-w-6xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Textos más pequeños en móvil */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+  }
+  
+  /* Grid de 1 columna en móvil */
+  .grid-cols-2, .grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+  
+  /* Breadcrumbs más compactos */
+  .breadcrumb {
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+  }
+  
+  /* Modales ocupan toda la pantalla */
+  .confirmation-dialog, .toast-notification {
+    max-width: calc(100vw - 2rem);
+    margin: 0 1rem;
+  }
+  
+  /* Cards con menos padding */
+  .card {
+    padding: 1rem !important;
+  }
+  
+  /* Botones full width en móvil */
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .button-group button {
+    width: 100%;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Grid de 2 columnas en tablet */
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  
+  /* Container medium */
+  .max-w-6xl {
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+  
+  /* Texto intermedio */
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Desktop grande (1440px+) */
+@media (min-width: 1440px) {
+  .max-w-6xl {
+    max-width: 1280px;
+  }
+  
+  /* Más espacio en pantallas grandes */
+  .container {
+    padding: 0 3rem;
   }
 }
 
