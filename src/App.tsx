@@ -26,8 +26,8 @@ export default function App() {
       } else if (window.location.hash === '#perfil') {
         setCurrentSection('perfil');
       } else if (window.location.hash === '') {
-        // When clearing hash, go back to jardin with navigation
-        setCurrentSection('jardin');
+        // When clearing hash, go back to welcome screen
+        setCurrentSection('welcome');
       }
     };
 
@@ -43,7 +43,7 @@ export default function App() {
   }
 
   if (currentSection === 'chat') {
-    return <ChatVerificationFlow onBack={() => setCurrentSection('aura')} />;
+    return <ChatVerificationFlow onBack={() => setCurrentSection('welcome')} />;
   }
 
   if (currentSection === 'trust') {
@@ -51,11 +51,11 @@ export default function App() {
   }
 
   if (currentSection === 'mindfulChat') {
-    return <MindfulChat onBack={() => setCurrentSection('aura')} />;
+    return <MindfulChat onBack={() => setCurrentSection('welcome')} />;
   }
 
   if (currentSection === 'perfil') {
-    return <MiPerfil onBack={() => setCurrentSection('jardin')} />;
+    return <MiPerfil onBack={() => setCurrentSection('welcome')} />;
   }
 
   return (
