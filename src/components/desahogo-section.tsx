@@ -58,146 +58,55 @@ export function DesahogoSection() {
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
-  const restartTimeoutRef = useRef<any>(null);
 
   useEffect(() => {
-    // Initialize Speech Recognition with improved settings
+    // Initialize Speech Recognition
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
-      
-      // Configuración mejorada para mejor precisión
-      recognitionRef.current.continuous = true; // Continua escuchando
-      recognitionRef.current.interimResults = true; // Muestra resultados parciales
-      recognitionRef.current.lang = 'es-MX'; // Español México (mejor para español latino)
-      recognitionRef.current.maxAlternatives = 3; // Considera más alternativas
-      
-      // Para Chrome/Edge - mejora la precisión
-      if ('webkitSpeechRecognition' in window) {
-        recognitionRef.current.grammars = null;
-      }
-
-      recognitionRef.current.onstart = () => {
-        console.log('🎤 Reconocimiento de voz iniciado');
-        setIsListening(true);
-        setIsRecording(true);
-      };
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = 'es-ES';
 
       recognitionRef.current.onresult = (event: any) => {
         let interimTranscript = '';
         let finalTranscript = '';
 
-        // Procesa todos los resultados
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
-          
-          // Usa la alternativa con mayor confianza
-          let bestTranscript = transcript;
-          let bestConfidence = event.results[i][0].confidence;
-          
-          // Revisa otras alternativas si existen
-          for (let j = 1; j < event.results[i].length && j < 3; j++) {
-            if (event.results[i][j].confidence > bestConfidence) {
-              bestTranscript = event.results[i][j].transcript;
-              bestConfidence = event.results[i][j].confidence;
-            }
-          }
-          
           if (event.results[i].isFinal) {
-            finalTranscript += bestTranscript + ' ';
-            console.log('✅ Final:', bestTranscript, 'Confianza:', bestConfidence);
+            finalTranscript += transcript + ' ';
           } else {
-            interimTranscript += bestTranscript;
+            interimTranscript += transcript;
           }
         }
 
-        // Actualiza el texto con resultados finales
         if (finalTranscript) {
           setMyMessage(prev => {
-            const newText = (prev + finalTranscript).trim();
-            // Capitaliza la primera letra de cada oración
-            const capitalized = newText.charAt(0).toUpperCase() + newText.slice(1);
-            return capitalized.slice(0, MAX_CHARACTERS);
+            const newText = (prev + finalTranscript).slice(0, MAX_CHARACTERS);
+            return newText;
           });
         }
       };
 
       recognitionRef.current.onerror = (event: any) => {
-        console.error('❌ Error de reconocimiento:', event.error);
-        
-        // Manejo específico de errores
-        if (event.error === 'no-speech') {
-          console.log('⚠️ No se detectó voz, reintentando...');
-          // Auto-reinicia si no detecta voz
-          if (isListening) {
-            restartTimeoutRef.current = setTimeout(() => {
-              if (recognitionRef.current && isListening) {
-                try {
-                  recognitionRef.current.start();
-                } catch (e) {
-                  console.log('Ya está corriendo');
-                }
-              }
-            }, 100);
-          }
-        } else if (event.error === 'audio-capture') {
-          alert('No se puede acceder al micrófono. Por favor verifica los permisos.');
-          setIsListening(false);
-          setIsRecording(false);
-        } else if (event.error === 'not-allowed') {
-          alert('Permiso de micrófono denegado. Por favor actívalo en la configuración del navegador.');
-          setIsListening(false);
-          setIsRecording(false);
-        } else {
-          // Otros errores - intenta reiniciar
-          if (isListening) {
-            restartTimeoutRef.current = setTimeout(() => {
-              if (recognitionRef.current && isListening) {
-                try {
-                  recognitionRef.current.start();
-                } catch (e) {
-                  console.log('Error al reiniciar');
-                }
-              }
-            }, 200);
-          }
-        }
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+        setIsRecording(false);
       };
 
       recognitionRef.current.onend = () => {
-        console.log('🛑 Reconocimiento terminado');
-        
-        // Auto-reinicia si todavía debería estar escuchando
-        if (isListening) {
-          console.log('🔄 Reiniciando reconocimiento...');
-          restartTimeoutRef.current = setTimeout(() => {
-            if (recognitionRef.current && isListening) {
-              try {
-                recognitionRef.current.start();
-              } catch (e) {
-                console.log('Ya está corriendo o error al reiniciar');
-              }
-            }
-          }, 100);
-        } else {
-          setIsRecording(false);
-        }
+        setIsListening(false);
+        setIsRecording(false);
       };
     }
 
     return () => {
       if (recognitionRef.current) {
-        try {
-          recognitionRef.current.stop();
-        } catch (e) {
-          // Ya estaba detenido
-        }
-      }
-      if (restartTimeoutRef.current) {
-        clearTimeout(restartTimeoutRef.current);
+        recognitionRef.current.stop();
       }
     };
-  }, [isListening]);
+  }, []);
 
   const toggleRecording = () => {
     if (!recognitionRef.current) {
@@ -206,39 +115,13 @@ export function DesahogoSection() {
     }
 
     if (isListening) {
-      // Detener
-      console.log('🛑 Deteniendo reconocimiento...');
+      recognitionRef.current.stop();
       setIsListening(false);
       setIsRecording(false);
-      if (restartTimeoutRef.current) {
-        clearTimeout(restartTimeoutRef.current);
-      }
-      try {
-        recognitionRef.current.stop();
-      } catch (e) {
-        console.log('Error al detener');
-      }
     } else {
-      // Iniciar
-      console.log('▶️ Iniciando reconocimiento...');
+      recognitionRef.current.start();
       setIsListening(true);
       setIsRecording(true);
-      try {
-        recognitionRef.current.start();
-      } catch (e) {
-        console.log('Error al iniciar, reintentando...');
-        // Si ya está corriendo, detén y reinicia
-        setTimeout(() => {
-          try {
-            recognitionRef.current.stop();
-            setTimeout(() => {
-              recognitionRef.current.start();
-            }, 100);
-          } catch (err) {
-            console.error('No se pudo iniciar el reconocimiento');
-          }
-        }, 100);
-      }
     }
   };
 
