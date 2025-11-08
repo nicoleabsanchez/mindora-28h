@@ -15,6 +15,15 @@ export function Navigation({ currentSection, onSectionChange }: NavigationProps)
     { id: 'perfil' as Section, icon: User, label: 'Perfil' }
   ];
 
+  const handleNavigation = (sectionId: Section) => {
+    if (sectionId === 'perfil') {
+      // Use hash routing for profile to ensure onBack works properly
+      window.location.hash = '#perfil';
+    } else {
+      onSectionChange(sectionId);
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: 100 }}
@@ -30,7 +39,7 @@ export function Navigation({ currentSection, onSectionChange }: NavigationProps)
             return (
               <button
                 key={item.id}
-                onClick={() => onSectionChange(item.id)}
+                onClick={() => handleNavigation(item.id)}
                 className="relative flex flex-col items-center gap-0.5 transition-all"
               >
                 <div

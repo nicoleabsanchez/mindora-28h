@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Info, Volume2, VolumeX, Volume1, Check } from 'lucide-react';
+import { X, Info, Volume2, VolumeX, Volume1, Check, Home } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Slider } from './ui/slider';
@@ -258,6 +258,19 @@ export function AuraMode() {
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-2xl w-full"
         >
+          <div className="flex items-center justify-between mb-6">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.location.hash = ''}
+              className="text-purple-600 hover:text-purple-900"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Inicio
+            </Button>
+            <div className="flex-1" />
+          </div>
+          
           <div className="text-center mb-8">
             <motion.div
               initial={{ scale: 0 }}

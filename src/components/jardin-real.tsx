@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Settings as SettingsIcon, Award, TrendingUp, Star, Zap } from 'lucide-react';
+import { Plus, Settings as SettingsIcon, Award, TrendingUp, Star, Zap, Home } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { ScenarioSelector, ScenarioType } from './scenario-selector';
@@ -130,7 +130,8 @@ export function JardinReal() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden pb-24">
+    <>
+      <div className="min-h-screen relative overflow-hidden pb-24">
       {/* Background */}
       {renderScenarioBackground()}
 
@@ -139,30 +140,43 @@ export function JardinReal() {
         {/* Header */}
         <div className="max-w-4xl mx-auto mb-6">
           <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-white text-3xl drop-shadow-lg">
-                Mi {scenario === 'jardin' ? 'Jardín' : scenario === 'cabana' ? 'Cabaña' : 'Terraza'} Real 🌿
-              </h1>
-              <p className="text-white/90 text-sm drop-shadow">
-                Cultiva tus hábitos fuera de pantallas
-              </p>
-            </div>
-            <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.location.hash = ''}
+              className="text-white hover:text-white/80 drop-shadow-lg"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Inicio
+            </Button>
+            <div className="flex-1" />
+            <div className="flex items-center gap-2">
               <Button
-                onClick={() => setShowAchievements(true)}
+                variant="ghost"
                 size="icon"
-                className="bg-white/90 hover:bg-white text-purple-600"
+                onClick={() => setShowAchievements(true)}
+                className="bg-white/20 hover:bg-white/30 text-white"
               >
                 <Award className="w-5 h-5" />
               </Button>
               <Button
-                onClick={() => setShowSettings(true)}
+                variant="ghost"
                 size="icon"
-                className="bg-white/90 hover:bg-white text-gray-700"
+                onClick={() => setShowSettings(true)}
+                className="bg-white/20 hover:bg-white/30 text-white"
               >
                 <SettingsIcon className="w-5 h-5" />
               </Button>
             </div>
+          </div>
+          <div>
+            <h1 className="text-white text-3xl drop-shadow-lg">
+              Mi {scenario === 'jardin' ? 'Jardín' : scenario === 'cabana' ? 'Cabaña' : 'Terraza'} Real 🌿
+            </h1>
+            <p className="text-white/90 text-sm drop-shadow">
+              Cultiva tus hábitos fuera de pantallas
+            </p>
+          </div>
           </div>
 
           {/* Stats */}
@@ -302,7 +316,6 @@ export function JardinReal() {
         </div>
       </div>
 
-      {/* Settings Modal */}
       <AnimatePresence>
         {showSettings && (
           <motion.div
@@ -443,6 +456,6 @@ export function JardinReal() {
           />
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Waves, Lightbulb, Users, Send, Heart, Mic, MicOff } from 'lucide-react';
+import { Waves, Lightbulb, Users, Send, Heart, Mic, MicOff, Home } from 'lucide-react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Card } from './ui/card';
@@ -172,6 +172,18 @@ export function DesahogoSection() {
         className="max-w-3xl mx-auto mb-24"
       >
         <div className="text-center mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.location.hash = ''}
+              className="text-purple-600 hover:text-purple-900"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Inicio
+            </Button>
+            <div className="flex-1" />
+          </div>
           <h1 className="text-4xl text-purple-900 mb-2">Desahogo</h1>
           <p className="text-purple-700">Cuando necesitas ser escuchado</p>
         </div>

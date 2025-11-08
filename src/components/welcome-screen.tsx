@@ -85,13 +85,14 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Button
             onClick={onEnter}
             size="lg"
-            className="bg-gradient-to-r from-purple-500 to-green-500 hover:from-purple-600 hover:to-green-600 text-white px-12 py-6 text-lg rounded-full"
+            className="bg-gradient-to-r from-purple-500 to-green-500 hover:from-purple-600 hover:to-green-600 text-white px-8 py-6 text-lg rounded-full"
           >
-            Entrar a Mindora
+            Explorar Mindora
           </Button>
         </motion.div>
       </motion.div>
