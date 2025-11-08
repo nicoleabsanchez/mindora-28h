@@ -41,7 +41,8 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
           transition={{ delay: 0.6 }}
           className="text-2xl text-purple-700 mb-12"
         >
-          Siente, conecta, florece
+          🌸 Siente, 🤝 Conecta, 🌱 Florece
+
         </motion.p>
 
         <motion.div
