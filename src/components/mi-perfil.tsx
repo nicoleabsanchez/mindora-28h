@@ -89,7 +89,7 @@ const mockAlert: PatternAlert = {
 const organizations: Organization[] = [
   {
     id: '1',
-    name: 'Cruz Roja Mexicana',
+    name: 'Cruz Roja',
     icon: '🏥',
     description: 'Apoyo psicológico 24/7',
     services: ['Apoyo psicológico gratuito', 'Disponible 24/7', 'Profesionales certificados'],

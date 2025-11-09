@@ -537,7 +537,14 @@ export function MindfulChat({ onBack }: MindfulChatProps) {
             <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E27] to-[#1A1F3A] opacity-98" />
             
             <div className="relative z-10 max-w-md w-full text-center">
-              <MindoAvatar emotion="happy" size="large" />
+              {/* Cute bye bye cat gif */}
+              <div className="flex justify-center mb-4">
+                <img 
+                  src={`${import.meta.env.BASE_URL}images/bye-cat.gif`}
+                  alt="Goodbye cat waving" 
+                  className="w-40 h-40 object-contain"
+                />
+              </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -639,7 +646,14 @@ export function MindfulChat({ onBack }: MindfulChatProps) {
                 <h3 className="text-white mb-6">Aura Azul</h3>
               </div>
 
-              <MindoAvatar emotion="calm" size="small" animate={false} />
+              {/* Cute bye bye cat gif */}
+              <div className="flex justify-center mb-4">
+                <img 
+                  src={`${import.meta.env.BASE_URL}images/bye-cat.gif`}
+                  alt="Goodbye cat" 
+                  className="w-32 h-32 object-contain"
+                />
+              </div>
 
               <div className="mt-6 space-y-6">
                 <h2 className="text-white text-xl">Tiempo de descanso</h2>
