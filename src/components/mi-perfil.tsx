@@ -95,7 +95,7 @@ const organizations: Organization[] = [
     services: ['Apoyo psicológico gratuito', 'Disponible 24/7', 'Profesionales certificados'],
     contact: {
       phone: '(55) 5395-1111',
-      website: 'www.cruzroja.org.mx/apoyo',
+      website: 'www.cruzroja.org.pe/apoyo',
       chat: true
     },
     verified: true,
