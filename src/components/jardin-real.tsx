@@ -170,10 +170,10 @@ export function JardinReal() {
             </div>
           </div>
           <div>
-            <h1 className="text-white text-3xl drop-shadow-lg">
+            <h1 className="text-black text-3xl drop-shadow-lg">
               Mi {scenario === 'jardin' ? 'Jardín' : scenario === 'cabana' ? 'Cabaña' : 'Terraza'} Real 🌿
             </h1>
-            <p className="text-white/90 text-sm drop-shadow">
+            <p className="text-black/90 text-sm drop-shadow">
               Cultiva tus hábitos fuera de pantallas
             </p>
           </div>
