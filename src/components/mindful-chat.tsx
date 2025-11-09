@@ -32,12 +32,16 @@ const TIME_LIMITS = [
 // Development mode configuration
 const DEV_MODE_MULTIPLIER = 60; // 1 minute = 1 second
 
+// Gress automated responses (Demo script)
+const GRESS_RESPONSES = [
+  "¡Hola! Sí, a veces coincidimos justo cuando más lo necesitamos.",
+  "Te entiendo… yo también. Estoy estudiando para el examen, pero Mindora me ayuda a mantener la calma.",
+  "Trato hecho 🌱"
+];
+
 export function MindfulChat({ onBack }: MindfulChatProps) {
   const [currentView, setCurrentView] = useState<ChatView>('chat');
-  const [messages, setMessages] = useState<Message[]>([
-    { id: '1', text: 'Hola! 👋', sender: 'them', timestamp: '10:23 AM' },
-    { id: '2', text: 'Hola! Me alegra conectar', sender: 'me', timestamp: '10:24 AM' }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [timeLimit, setTimeLimit] = useState(15); // minutes
   const [selectedTimeLimit, setSelectedTimeLimit] = useState(15);
@@ -46,6 +50,7 @@ export function MindfulChat({ onBack }: MindfulChatProps) {
   const [hasExtended, setHasExtended] = useState(false);
   const [cooldownRemaining, setCooldownRemaining] = useState(7020); // 1h 57min in seconds
   const [devMode, setDevMode] = useState(false);
+  const [gressResponseIndex, setGressResponseIndex] = useState(0);
 
   const handleBack = () => {
     if (onBack) {
@@ -103,15 +108,30 @@ export function MindfulChat({ onBack }: MindfulChatProps) {
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
     
-    const msg: Message = {
+    // Add Dina's message (user)
+    const dinaMsg: Message = {
       id: Date.now().toString(),
       text: newMessage,
       sender: 'me',
       timestamp: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
     };
     
-    setMessages([...messages, msg]);
+    setMessages(prev => [...prev, dinaMsg]);
     setNewMessage('');
+
+    // Auto-respond with Gress's next message if available
+    if (gressResponseIndex < GRESS_RESPONSES.length) {
+      setTimeout(() => {
+        const gressMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          text: GRESS_RESPONSES[gressResponseIndex] || '',
+          sender: 'them',
+          timestamp: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, gressMsg]);
+        setGressResponseIndex(prev => prev + 1);
+      }, 1500); // Gress responds after 1.5 seconds
+    }
   };
 
   const handleSaveTimeLimit = () => {

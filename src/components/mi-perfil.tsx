@@ -110,7 +110,7 @@ const organizations: Organization[] = [
     services: ['Consejería telefónica', 'Atención en crisis', 'Gratuito y confidencial'],
     contact: {
       phone: '800-911-2000',
-      website: 'www.gob.mx/salud/conadic',
+      website: 'www.gob.pe/salud/conadic',
       chat: false
     },
     verified: true,
