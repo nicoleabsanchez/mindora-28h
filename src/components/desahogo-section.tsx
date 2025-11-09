@@ -184,7 +184,7 @@ export function DesahogoSection() {
             </Button>
             <div className="flex-1" />
           </div>
-          <h1 className="text-4xl text-purple-900 mb-2">Desahogo</h1>
+          <h1 className="text-4xl text-purple-900 mb-2">Expresa tus emociones</h1>
           <p className="text-purple-700">Cuando necesitas ser escuchado</p>
         </div>
 
