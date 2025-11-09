@@ -233,10 +233,10 @@ export function JardinReal() {
         <div className="max-w-4xl mx-auto space-y-6">
           {hobbies.map((hobby) => (
             <Card key={hobby.id} className="bg-white/95 backdrop-blur-sm p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="text-4xl">{hobby.icon}</div>
-                  <div>
+              <div className="flex items-start justify-between mb-4 gap-4">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="text-4xl flex-shrink-0">{hobby.icon}</div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-gray-900 text-lg font-semibold">{hobby.name}</h3>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-gray-600">
@@ -249,34 +249,32 @@ export function JardinReal() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 flex-shrink-0">
                   {/* Nivel disponible */}
-                  <div className="text-center">
-                    {(() => {
-                      const level = getPlantLevel(hobby.consecutiveDays, hobby.totalPoints);
-                      const levelInfo = {
-                        principiante: { icon: '🌱', label: 'Principiante', color: 'bg-green-100 text-green-700' },
-                        intermedio: { icon: '🪴', label: 'Intermedio', color: 'bg-blue-100 text-blue-700' },
-                        pro: { icon: '🌳', label: 'Pro', color: 'bg-purple-100 text-purple-700' }
-                      };
-                      const info = levelInfo[level];
+                  {(() => {
+                    const level = getPlantLevel(hobby.consecutiveDays, hobby.totalPoints);
+                    const levelInfo = {
+                      principiante: { icon: '🌱', label: 'Principiante', color: 'bg-green-100 text-green-700' },
+                      intermedio: { icon: '🪴', label: 'Intermedio', color: 'bg-blue-100 text-blue-700' },
+                      pro: { icon: '🌳', label: 'Pro', color: 'bg-purple-100 text-purple-700' }
+                    };
+                    const info = levelInfo[level];
 
-                      return (
-                        <div className={`${info.color} px-3 py-1 rounded-full text-xs font-semibold`}>
-                          {info.icon} {info.label}
-                        </div>
-                      );
-                    })()}
-                  </div>
+                    return (
+                      <div className={`${info.color} px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap`}>
+                        {info.icon} {info.label}
+                      </div>
+                    );
+                  })()}
 
                   {/* Botón agregar sesión */}
                   <Button
                     onClick={() => addSession(hobby.id)}
-                    className="bg-green-600 hover:bg-green-700 text-white"
+                    className="bg-green-100 hover:bg-green-200 text-green-700 whitespace-nowrap"
                     size="sm"
                   >
-                    <Zap className="w-4 h-4 mr-1" />
-                    Sesión
+                    <Zap className="w-4 h-4 mr-1.5" />
+                    <span className="font-semibold">Sesión</span>
                   </Button>
                 </div>
               </div>

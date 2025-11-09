@@ -220,7 +220,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                     <div className="text-left text-white">
                       <div className="flex items-center gap-2 mb-1">
                         <Book className="w-6 h-6" />
-                        <h3 className="text-lg">📖 Mi Diario Privado</h3>
+                        <h3 className="text-lg">Mi Diario Privado</h3>
                       </div>
                       <p className="text-sm opacity-85">Solo tú puedes verlo</p>
                     </div>
