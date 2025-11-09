@@ -203,7 +203,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                       </div>
                       <div>
                         <div className="text-2xl">✍️</div>
-                        <p className="text-sm mt-1">23 desahogos</p>
+                        <p className="text-sm mt-1">23 expresiones</p>
                       </div>
                     </div>
                   </div>
@@ -287,7 +287,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
               />
 
               <div className="mb-6">
-                <h2 className="text-gray-900 text-xl mb-4">✍️ Tus desahogos ({mockPosts.length})</h2>
+                <h2 className="text-gray-900 text-xl mb-4">✍️ Tus emociones compartidas ({mockPosts.length})</h2>
 
                 {/* Filters */}
                 <div className="flex gap-2">
@@ -320,53 +320,53 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="mb-6"
                   >
-                    <Card className="bg-yellow-50 border-2 border-yellow-400 p-5 relative">
+                    <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-purple-200 p-5 relative shadow-lg">
                       <button
                         onClick={() => setShowAlert(false)}
-                        className="absolute top-3 right-3 text-yellow-600 hover:text-yellow-800"
+                        className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
                       >
                         <X className="w-4 h-4" />
                       </button>
 
                       <motion.div
                         animate={{
-                          scale: [1, 1.02, 1]
+                          scale: [1, 1.05, 1]
                         }}
                         transition={{
-                          duration: 2,
+                          duration: 3,
                           repeat: Infinity,
                           ease: 'easeInOut'
                         }}
                         className="text-center mb-4"
                       >
-                        <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto" />
+                        <div className="text-5xl">💙</div>
                       </motion.div>
 
-                      <h3 className="text-gray-900 text-center mb-3">Hemos notado un patrón</h3>
+                      <h3 className="text-gray-900 text-center mb-3 font-semibold">Nos importa tu bienestar</h3>
 
-                      <p className="text-gray-700 text-sm text-center mb-4">
-                        En las últimas {mockAlert.timeframe} semanas has mencionado{' '}
-                        <span className="font-semibold text-yellow-700">"{mockAlert.keyword}"</span>{' '}
-                        en {mockAlert.mentions} de tus desahogos.
+                      <p className="text-gray-700 text-sm text-center mb-4 leading-relaxed">
+                        Hemos notado que en tus últimas expresiones has mencionado{' '}
+                        <span className="font-semibold text-purple-600">"{mockAlert.keyword}"</span>{' '}
+                        varias veces. Queremos que sepas que no estás solo/a.
                       </p>
 
-                      <p className="text-gray-700 text-sm text-center mb-6">
-                        ¿Te gustaría hablar con un profesional?
+                      <p className="text-gray-700 text-sm text-center mb-6 leading-relaxed">
+                        💜 Si lo deseas, podemos conectarte con profesionales que pueden ayudarte a sentirte mejor.
                       </p>
 
                       <div className="flex gap-3">
                         <Button
                           onClick={() => setCurrentView('professionalHelp')}
-                          className="flex-1 bg-yellow-500 hover:bg-yellow-600"
+                          className="flex-1 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
                         >
-                          Ver recomendación
+                          💬 Me gustaría apoyo
                         </Button>
                         <Button
                           onClick={() => setShowAlert(false)}
                           variant="outline"
-                          className="flex-1 border-yellow-400 text-yellow-700 hover:bg-yellow-50"
+                          className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
                         >
-                          No, gracias
+                          Ahora no
                         </Button>
                       </div>
                     </Card>
@@ -469,7 +469,7 @@ export function MiPerfil({ onBack }: MiPerfilProps = {}) {
                 <div className="text-5xl mb-4">🤝</div>
                 <h2 className="text-gray-900 text-2xl mb-3">Estamos aquí para ayudarte</h2>
                 <p className="text-gray-600 text-sm">
-                  Basándonos en tus desahogos, creemos que hablar con un profesional podría ayudarte.
+                  Basándonos en lo que has compartido, creemos que hablar con un profesional podría ayudarte.
                 </p>
               </div>
 
