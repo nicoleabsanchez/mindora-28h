@@ -104,6 +104,36 @@ export function JardinReal() {
   const [showSettings, setShowSettings] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
 
+  // Función para agregar una sesión al hábito
+  const addSession = (hobbyId: string) => {
+    setHobbies(prevHobbies => 
+      prevHobbies.map(hobby => {
+        if (hobby.id !== hobbyId) return hobby;
+
+        const newConsecutiveDays = hobby.consecutiveDays + 1;
+        const newTotalPoints = hobby.totalPoints + 5; // 5 puntos por sesión
+        const today = new Date();
+
+        // Actualizar plantas existentes
+        const updatedPlants = hobby.plants.map(plant => ({
+          ...plant,
+          daysGrowing: plant.daysGrowing + 1,
+          totalDays: plant.totalDays + 1,
+          points: plant.points + 5,
+          stage: getPlantStage(plant.daysGrowing + 1, plant.totalDays + 1)
+        }));
+
+        return {
+          ...hobby,
+          consecutiveDays: newConsecutiveDays,
+          totalPoints: newTotalPoints,
+          lastPracticed: today,
+          plants: updatedPlants
+        };
+      })
+    );
+  };
+
   // Calcular estadísticas totales
   const totalPoints = hobbies.reduce((sum, h) => sum + h.totalPoints, 0);
   const totalPlants = hobbies.reduce((sum, h) => sum + h.plants.length, 0);
@@ -219,23 +249,35 @@ export function JardinReal() {
                   </div>
                 </div>
 
-                {/* Nivel disponible */}
-                <div className="text-center">
-                  {(() => {
-                    const level = getPlantLevel(hobby.consecutiveDays, hobby.totalPoints);
-                    const levelInfo = {
-                      principiante: { icon: '🌱', label: 'Principiante', color: 'bg-green-100 text-green-700' },
-                      intermedio: { icon: '🪴', label: 'Intermedio', color: 'bg-blue-100 text-blue-700' },
-                      pro: { icon: '🌳', label: 'Pro', color: 'bg-purple-100 text-purple-700' }
-                    };
-                    const info = levelInfo[level];
+                <div className="flex items-center gap-2">
+                  {/* Nivel disponible */}
+                  <div className="text-center">
+                    {(() => {
+                      const level = getPlantLevel(hobby.consecutiveDays, hobby.totalPoints);
+                      const levelInfo = {
+                        principiante: { icon: '🌱', label: 'Principiante', color: 'bg-green-100 text-green-700' },
+                        intermedio: { icon: '🪴', label: 'Intermedio', color: 'bg-blue-100 text-blue-700' },
+                        pro: { icon: '🌳', label: 'Pro', color: 'bg-purple-100 text-purple-700' }
+                      };
+                      const info = levelInfo[level];
 
-                    return (
-                      <div className={`${info.color} px-3 py-1 rounded-full text-xs font-semibold`}>
-                        {info.icon} {info.label}
-                      </div>
-                    );
-                  })()}
+                      return (
+                        <div className={`${info.color} px-3 py-1 rounded-full text-xs font-semibold`}>
+                          {info.icon} {info.label}
+                        </div>
+                      );
+                    })()}
+                  </div>
+
+                  {/* Botón agregar sesión */}
+                  <Button
+                    onClick={() => addSession(hobby.id)}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                    size="sm"
+                  >
+                    <Zap className="w-4 h-4 mr-1" />
+                    Sesión
+                  </Button>
                 </div>
               </div>
 
